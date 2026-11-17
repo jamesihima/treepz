@@ -104,15 +104,46 @@ input::placeholder,textarea::placeholder{color:#6E6E6A;}
 
           <sc-if value="{{ step2 }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;flex-direction:column;gap:14px;">
-              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;">PICK A DAY</span>
-              <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;">
-                <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
-                  <button type="button" onClick="{{ d.pick }}" style="cursor:pointer;font:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:14px;border:1px solid {{ d.border }};background:{{ d.bg }};color:{{ d.fg }};transition:all .6s cubic-bezier(.22,1,.36,1);">
-                    <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;">{{ d.dow }}</span>
-                    <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:22px;">{{ d.date }}</span>
-                    <span style="font-size:11px;">{{ d.mon }}</span>
-                  </button>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;">PICK YOUR DAYS</span>
+              <div style="display:flex;gap:4px;padding:4px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);">
+                <sc-for list="{{ calModes }}" as="cm" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ cm.pick }}" style="cursor:pointer;font:inherit;flex:1;height:38px;border:0;border-radius:10px;background:{{ cm.bg }};color:{{ cm.fg }};font-size:13px;font-weight:500;transition:background .5s,color .5s;">{{ cm.label }}</button>
                 </sc-for>
+              </div>
+              <sc-if value="{{ isRecurring }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <span style="font-size:13px;color:#B8B8B4;">Repeat every — we'll select each one for the rest of {{ monthLabel }}</span>
+                  <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;">
+                    <sc-for list="{{ weekdayChips }}" as="wd" hint-placeholder-count="7">
+                      <button type="button" onClick="{{ wd.pick }}" style="cursor:pointer;font:inherit;height:36px;border-radius:10px;border:1px solid {{ wd.border }};background:{{ wd.bg }};color:{{ wd.fg }};font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.08em;transition:all .5s cubic-bezier(.22,1,.36,1);">{{ wd.label }}</button>
+                    </sc-for>
+                  </div>
+                  <button type="button" onClick="{{ toggleEveryday }}" style="cursor:pointer;font:inherit;align-self:flex-start;height:34px;padding:0 14px;border-radius:999px;border:1px solid {{ everyday.border }};background:{{ everyday.bg }};color:{{ everyday.fg }};font-size:13px;font-weight:500;">Every day</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ isRange }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:13px;color:#B8B8B4;">{{ rangeHint }}</span>
+              </sc-if>
+              <div style="border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.3);padding:12px;display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <button type="button" onClick="{{ prevMonth }}" disabled="{{ prevDisabled }}" aria-label="Previous month" style="cursor:pointer;width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:none;color:#fff;font-size:16px;opacity:{{ prevOp }};">‹</button>
+                  <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:16px;">{{ monthLabel }}</span>
+                  <button type="button" onClick="{{ nextMonth }}" aria-label="Next month" style="cursor:pointer;width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:none;color:#fff;font-size:16px;">›</button>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;">
+                  <sc-for list="{{ dowHead }}" as="dh" hint-placeholder-count="7">
+                    <span style="text-align:center;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.1em;color:#6E6E6A;padding:4px 0;">{{ dh }}</span>
+                  </sc-for>
+                  <sc-for list="{{ cells }}" as="cl" hint-placeholder-count="35">
+                    <button type="button" onClick="{{ cl.pick }}" disabled="{{ cl.disabled }}" style="cursor:{{ cl.cursor }};font:inherit;height:40px;border-radius:10px;border:1px solid {{ cl.border }};background:{{ cl.bg }};color:{{ cl.fg }};font-size:14px;font-weight:{{ cl.fw }};opacity:{{ cl.op }};padding:0;transition:background .4s,color .4s,border-color .4s;">{{ cl.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:#B8B8B4;">
+                  <span>{{ selLabel }}</span>
+                  <sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" onClick="{{ clearSel }}" style="cursor:pointer;font:inherit;background:none;border:0;color:#FFC044;font-size:13px;padding:4px 0;">Clear</button>
+                  </sc-if>
+                </div>
               </div>
               <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;margin-top:4px;">PICK A TIME (WAT)</span>
               <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;">
@@ -120,12 +151,18 @@ input::placeholder,textarea::placeholder{color:#6E6E6A;}
                   <button type="button" onClick="{{ tm.pick }}" style="cursor:pointer;font:inherit;height:44px;border-radius:12px;border:1px solid {{ tm.border }};background:{{ tm.bg }};color:{{ tm.fg }};font-size:14px;font-weight:500;transition:all .6s cubic-bezier(.22,1,.36,1);">{{ tm.label }}</button>
                 </sc-for>
               </div>
-              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;margin-top:4px;">HOW WOULD YOU LIKE TO MEET</span>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;margin-top:4px;">HOW WOULD YOU LIKE TO MEET (OPTIONAL)</span>
               <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
                 <sc-for list="{{ modes }}" as="md" hint-placeholder-count="2">
-                  <button type="button" onClick="{{ md.pick }}" style="cursor:pointer;font:inherit;height:44px;border-radius:12px;border:1px solid {{ md.border }};background:{{ md.bg }};color:{{ md.fg }};font-size:14px;font-weight:500;transition:all .6s cubic-bezier(.22,1,.36,1);">{{ md.label }}</button>
+                  <button type="button" onClick="{{ md.pick }}" style="cursor:pointer;font:inherit;height:48px;border-radius:12px;border:1px solid {{ md.border }};background:{{ md.bg }};color:{{ md.fg }};font-size:14px;font-weight:500;transition:all .6s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;"><span>{{ md.label }}</span><span style="font-size:11px;opacity:.7;">{{ md.sub }}</span></button>
                 </sc-for>
               </div>
+              <sc-if value="{{ isOnline }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ gcalUrl }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,192,68,.4);background:rgba(255,192,68,.08);font-size:13px;color:#fff;" style-hover="border-color:#FFC044;color:#fff;"><span>{{ gcalText }}</span><span style="color:#FFC044;font-weight:600;">Open ↗</span></a>
+              </sc-if>
+              <sc-if value="{{ isOnsite }}" hint-placeholder-val="{{ false }}">
+                <a href="tel:+2347070008234" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,192,68,.4);background:rgba(255,192,68,.08);font-size:13px;color:#fff;" style-hover="border-color:#FFC044;color:#fff;"><span>Call us to agree a meeting point</span><span style="color:#FFC044;font-weight:600;white-space:nowrap;">+234 707 000 8234</span></a>
+              </sc-if>
               <label style="display:flex;flex-direction:column;gap:6px;">
                 <span style="font-size:13px;color:#D8D8D4;">Anything we should know? (optional)</span>
                 <textarea value="{{ notes }}" onChange="{{ setNotes }}" rows="3" placeholder="{{ p.notesPh }}" style="padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);color:#fff;font:inherit;font-size:15px;outline:none;resize:vertical;" style-focus="border-color:#FFC044;"></textarea>
@@ -258,7 +295,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     const q = new URLSearchParams(location.search).get('product') || (location.hash || '').slice(1);
-    this.state = { slug: P[q] ? q : 'school', step: 1, vals: {}, day: null, time: null, mode: 'Video call', notes: '', sent: false, err: '' };
+    this.state = { slug: P[q] ? q : 'school', step: 1, vals: {}, calMode: 'single', sel: [], rangeStart: null, weekdays: [], viewY: new Date().getFullYear(), viewM: new Date().getMonth(), time: null, mode: null, notes: '', sent: false, err: '' };
   }
   pick(slug) {
     if (slug === this.state.slug) return;
@@ -267,10 +304,49 @@ class Component extends DCLogic {
     this.setState({ slug, step: 1, err: '', sent: false, vals: Object.fromEntries(Object.entries(this.state.vals).filter(([k]) => YOU.some((y) => y[0] === k))) });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  days() {
-    const out = [], d = new Date(); d.setDate(d.getDate() + 1);
-    while (out.length < 5) { if (d.getDay() % 6) out.push(new Date(d)); d.setDate(d.getDate() + 1); }
-    return out;
+  iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  pd(k) { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); }
+  today() { const t = new Date(); t.setHours(0, 0, 0, 0); return t; }
+  monthDays(y, m) { const out = [], d = new Date(y, m, 1); while (d.getMonth() === m) { out.push(new Date(d)); d.setDate(d.getDate() + 1); } return out; }
+  applyWeekdays(weekdays, y = this.state.viewY, m = this.state.viewM) {
+    const t = this.today();
+    return this.monthDays(y, m).filter((d) => d >= t && weekdays.includes(d.getDay())).map((d) => this.iso(d));
+  }
+  clickDay(d) {
+    const s = this.state, k = this.iso(d);
+    if (s.calMode === 'single') return this.setState({ sel: [k], err: '' });
+    if (s.calMode === 'range') {
+      if (!s.rangeStart || s.sel.length > 1) return this.setState({ rangeStart: k, sel: [k], err: '' });
+      const a = this.pd(s.rangeStart), lo = a < d ? a : d, hi = a < d ? d : a, out = [];
+      for (const x = new Date(lo); x <= hi; x.setDate(x.getDate() + 1)) out.push(this.iso(x));
+      return this.setState({ sel: out, rangeStart: null, err: '' });
+    }
+    const set = new Set(s.sel); set.has(k) ? set.delete(k) : set.add(k);
+    this.setState({ sel: [...set].sort(), err: '' });
+  }
+  whenText() {
+    const s = this.state; if (!s.sel.length) return '—';
+    const f = (k, o) => this.pd(k).toLocaleDateString('en-GB', o);
+    const t = s.time ? `, ${s.time} WAT` : '';
+    if (s.sel.length === 1) return f(s.sel[0], { weekday: 'long', day: 'numeric', month: 'long' }) + t;
+    if (s.calMode === 'recurring' && s.weekdays.length) {
+      const names = s.weekdays.length === 7 ? 'Every day' : 'Every ' + s.weekdays.map((w) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][w]).join(', ');
+      return `${names}, ${f(s.sel[0], { day: 'numeric', month: 'short' })} – ${f(s.sel[s.sel.length - 1], { day: 'numeric', month: 'short' })}${t} (${s.sel.length} sessions)`;
+    }
+    if (s.calMode === 'range') return `${f(s.sel[0], { day: 'numeric', month: 'short' })} – ${f(s.sel[s.sel.length - 1], { day: 'numeric', month: 'short' })}${t} (${s.sel.length} days)`;
+    return `${s.sel.length} dates from ${f(s.sel[0], { day: 'numeric', month: 'short' })}${t}`;
+  }
+  gcal(p) {
+    const s = this.state; if (!s.sel.length) return 'https://calendar.google.com/calendar/r';
+    const [hh, mm] = (s.time || '10:00').split(':').map(Number), d0 = s.sel[0].replace(/-/g, '');
+    const pad = (n) => String(n).padStart(2, '0'), st = `${d0}T${pad(hh)}${pad(mm)}00`, en = `${d0}T${pad(hh + (mm + 30 >= 60 ? 1 : 0))}${pad((mm + 30) % 60)}00`;
+    const last = s.sel[s.sel.length - 1].replace(/-/g, '') + 'T235959';
+    let recur = '';
+    if (s.sel.length > 1) recur = s.calMode === 'recurring' && s.weekdays.length ? `RRULE:FREQ=WEEKLY;BYDAY=${s.weekdays.map((w) => ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'][w]).join(',')};UNTIL=${last}` : 'RDATE;VALUE=DATE:' + s.sel.slice(1).map((k) => k.replace(/-/g, '')).join(',');
+    if (s.calMode === 'range' && s.sel.length > 1) recur = `RRULE:FREQ=DAILY;UNTIL=${last}`;
+    const q = new URLSearchParams({ action: 'TEMPLATE', text: 'Treepz demo: ' + p.name, dates: `${st}/${en}`, ctz: 'Africa/Lagos', details: `Online demo of ${p.name} with the Treepz team.`, add: 'marketing@treepz.com' });
+    if (recur) q.set('recur', recur);
+    return 'https://calendar.google.com/calendar/render?' + q.toString();
   }
   fieldList(defs) {
     return defs.map(([key, label, type, ph, full]) => {
@@ -286,13 +362,12 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state, p = P[s.slug];
     const fmt = (d) => d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
-    const days = this.days();
     const v = s.vals;
     const summary = [
       { k: 'Product', v: p.name }, { k: p.fields[0][1], v: v.org || '—' },
-      { k: 'When', v: s.day != null ? `${fmt(days[s.day])}, ${s.time} WAT` : '—' }, { k: 'How', v: s.mode }, { k: 'Confirmation to', v: v.email || '—' },
+      { k: 'When', v: this.whenText() }, { k: 'How', v: s.mode || 'To be agreed' }, { k: 'Confirmation to', v: v.email || '—' },
     ];
-    const body = [`Product: ${p.name}`, ...p.fields.map((f) => `${f[1]}: ${v[f[0]] || '-'}`), ...YOU.map((f) => `${f[1]}: ${v[f[0]] || '-'}`), `When: ${summary[2].v}`, `How: ${s.mode}`, `Notes: ${s.notes || '-'}`].join('\n');
+    const body = [`Product: ${p.name}`, ...p.fields.map((f) => `${f[1]}: ${v[f[0]] || '-'}`), ...YOU.map((f) => `${f[1]}: ${v[f[0]] || '-'}`), `When: ${summary[2].v}`, `How: ${s.mode || 'To be agreed'}`, `Notes: ${s.notes || '-'}`].join('\n');
     return {
       p: { ...p, slug: s.slug, points: p.points, steps: p.steps.map((x, i) => ({ n: String(i + 1).padStart(2, '0'), t: x[0], d: x[1] })) },
       heroImgs: ORDER.map((k) => ({ src: P[k].img, alt: k === s.slug ? P[k].alt : '', op: k === s.slug ? 1 : 0 })),
@@ -301,9 +376,35 @@ class Component extends DCLogic {
       opFields: this.fieldList(p.fields), youFields: this.fieldList(YOU),
       step1: s.step === 1, step2: s.step === 2, stepNo: s.step, stepPct: s.step === 1 ? '50%' : '100%',
       notSent: !s.sent, sent: s.sent, err: s.err,
-      days: days.map((d, i) => ({ dow: d.toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase(), date: d.getDate(), mon: d.toLocaleDateString('en-GB', { month: 'short' }), pick: () => this.setState({ day: i, err: '' }), ...this.chip(s.day === i) })),
+      calModes: [['single', 'Single day'], ['recurring', 'Recurring'], ['range', 'Date range']].map(([k, label]) => ({ label, pick: () => this.setState({ calMode: k, sel: [], rangeStart: null, weekdays: [], err: '' }), ...(s.calMode === k ? { bg: '#FFC044', fg: '#0A0A0A' } : { bg: 'transparent', fg: '#D8D8D4' }) })),
+      isRecurring: s.calMode === 'recurring', isRange: s.calMode === 'range',
+      rangeHint: s.rangeStart ? 'Now pick the last day.' : 'Pick the first day, then the last day.',
+      weekdayChips: [1, 2, 3, 4, 5, 6, 0].map((w) => ({ label: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'][w], pick: () => { const ws = s.weekdays.includes(w) ? s.weekdays.filter((x) => x !== w) : [...s.weekdays, w]; this.setState({ weekdays: ws, sel: this.applyWeekdays(ws), err: '' }); }, ...this.chip(s.weekdays.includes(w)) })),
+      everyday: this.chip(s.weekdays.length === 7),
+      toggleEveryday: () => { const ws = s.weekdays.length === 7 ? [] : [0, 1, 2, 3, 4, 5, 6]; this.setState({ weekdays: ws, sel: this.applyWeekdays(ws), err: '' }); },
+      monthLabel: new Date(s.viewY, s.viewM, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }),
+      prevDisabled: s.viewY === new Date().getFullYear() && s.viewM === new Date().getMonth(),
+      prevOp: s.viewY === new Date().getFullYear() && s.viewM === new Date().getMonth() ? 0.3 : 1,
+      prevMonth: () => this.setState((st) => { const d = new Date(st.viewY, st.viewM - 1, 1); return { viewY: d.getFullYear(), viewM: d.getMonth(), sel: st.calMode === 'recurring' && st.weekdays.length ? this.applyWeekdays(st.weekdays, d.getFullYear(), d.getMonth()) : st.sel }; }),
+      nextMonth: () => this.setState((st) => { const d = new Date(st.viewY, st.viewM + 1, 1); return { viewY: d.getFullYear(), viewM: d.getMonth(), sel: st.calMode === 'recurring' && st.weekdays.length ? this.applyWeekdays(st.weekdays, d.getFullYear(), d.getMonth()) : st.sel }; }),
+      dowHead: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+      cells: (() => {
+        const first = new Date(s.viewY, s.viewM, 1), lead = (first.getDay() + 6) % 7, t0 = this.today(), set = new Set(s.sel), out = [];
+        for (let i = 0; i < lead; i++) out.push({ label: '', disabled: true, cursor: 'default', bg: 'transparent', fg: 'transparent', border: 'transparent', fw: 400, op: 1, pick: null });
+        this.monthDays(s.viewY, s.viewM).forEach((d) => {
+          const k = this.iso(d), past = d < t0, on = set.has(k), isToday = +d === +t0;
+          out.push({ label: d.getDate(), disabled: past, cursor: past ? 'default' : 'pointer', op: past ? 0.25 : 1, fw: on || isToday ? 600 : 400,
+            bg: on ? '#FFC044' : 'rgba(255,255,255,.03)', fg: on ? '#0A0A0A' : '#fff', border: on ? '#FFC044' : (isToday ? 'rgba(255,192,68,.6)' : 'transparent'), pick: past ? null : () => this.clickDay(d) });
+        });
+        return out;
+      })(),
+      hasSel: s.sel.length > 0,
+      selLabel: s.sel.length ? (s.sel.length === 1 ? '1 day selected' : s.sel.length + ' days selected') : 'No days selected yet',
+      clearSel: () => this.setState({ sel: [], rangeStart: null, weekdays: [] }),
       times: TIMES.map((t) => ({ label: t, pick: () => this.setState({ time: t, err: '' }), ...this.chip(s.time === t) })),
-      modes: ['Video call', 'On site in Lagos'].map((m) => ({ label: m, pick: () => this.setState({ mode: m }), ...this.chip(s.mode === m) })),
+      modes: [['Online', 'Add to Google Calendar'], ['On site', 'Call to agree a place']].map(([m, sub]) => ({ label: m, sub, pick: () => { const nm = s.mode === m ? null : m; this.setState({ mode: nm }); if (nm === 'Online') window.open(this.gcal(p), '_blank', 'noopener'); if (nm === 'On site') window.location.href = 'tel:+2347070008234'; }, ...this.chip(s.mode === m) })),
+      isOnline: s.mode === 'Online', isOnsite: s.mode === 'On site',
+      gcalUrl: this.gcal(p), gcalText: s.sel.length ? 'Add this demo to your Google Calendar' : 'Open Google Calendar (pick your days first to pre-fill it)',
       notes: s.notes, setNotes: (e) => this.setState({ notes: e.target.value }),
       next: () => {
         if (!v.org || !v.name || !v.email) return this.setState({ err: `Please add ${!v.org ? p.fields[0][1].toLowerCase() : !v.name ? 'your name' : 'your work email'}.` });
@@ -311,8 +412,8 @@ class Component extends DCLogic {
         this.setState({ step: 2, err: '' });
       },
       back: () => this.setState({ step: 1, err: '' }),
-      submit: (e) => { e.preventDefault(); if (s.day == null || !s.time) return this.setState({ err: 'Pick a day and a time.' }); this.setState({ sent: true, err: '' }); },
-      reset: () => this.setState({ sent: false, step: 1, day: null, time: null, notes: '' }),
+      submit: (e) => { e.preventDefault(); if (!s.sel.length || !s.time) return this.setState({ err: 'Pick at least one day and a time.' }); this.setState({ sent: true, err: '' }); },
+      reset: () => this.setState({ sent: false, step: 1, sel: [], rangeStart: null, weekdays: [], time: null, mode: null, notes: '' }),
       summary,
       mailto: `mailto:marketing@treepz.com?subject=${encodeURIComponent('Demo request: ' + p.name)}&body=${encodeURIComponent(body)}`,
     };
