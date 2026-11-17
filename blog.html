@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Blog &amp; Newsroom | Treepz</title>
+<meta name="description" content="Stories, announcements and press coverage from Treepz.">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+html,body{margin:0;padding:0;background:#FFFFFF;}
+body{font-family:'Inter',system-ui,sans-serif;color:#0A0A0A;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:#B07A00;}
+*{box-sizing:border-box;}
+::selection{background:#FFC044;color:#0A0A0A;}
+@keyframes tz-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<dc-import name="Treepz Nav" theme="light" hint-size="100%,0px"></dc-import>
+
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Blog index" style="max-width:1280px;margin:0 auto;padding:clamp(120px,14vw,170px) clamp(20px,5vw,72px) clamp(72px,10vw,120px);display:flex;flex-direction:column;gap:36px;">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:820px;">
+      <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.18em;color:#5E5E5A;">{{ eyebrow }}</span>
+      <h1 style="margin:0;font-family:'General Sans',sans-serif;font-weight:600;font-size:clamp(44px,6vw,88px);line-height:.96;letter-spacing:-.045em;">{{ title }}</h1>
+      <p style="margin:0;font-size:18px;line-height:1.55;color:#2A2A2A;text-wrap:pretty;">{{ intro }}</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+        <button onClick="{{ t.pick }}" style="cursor:pointer;font:inherit;font-size:14px;font-weight:500;padding:10px 18px;border-radius:999px;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }};transition:all .5s cubic-bezier(.22,1,.36,1);">{{ t.label }}</button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ hasFeatured }}" hint-placeholder-val="{{ true }}">
+      <a href="{{ featured.href }}" onClick="{{ featured.open }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:0;border-radius:28px;overflow:hidden;background:#0A0A0A;color:#fff;animation:tz-in .9s cubic-bezier(.22,1,.36,1);" style-hover="color:#fff;">
+        <div style="position:relative;min-height:340px;background:#1A1A1A;"><img src="{{ featured.img }}" alt="{{ featured.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ featured.pos }};"></div>
+        <div style="padding:clamp(28px,4vw,48px);display:flex;flex-direction:column;gap:16px;justify-content:center;">
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.16em;color:#FFC044;">FEATURED · {{ featured.catLabel }} · {{ featured.date }}</span>
+          <h2 style="margin:0;font-family:'General Sans',sans-serif;font-weight:600;font-size:clamp(28px,3vw,44px);line-height:1.04;letter-spacing:-.035em;">{{ featured.title }}</h2>
+          <p style="margin:0;font-size:16px;line-height:1.55;color:#B8B8B4;">{{ featured.dek }}</p>
+          <span style="font-size:14px;font-weight:600;color:#FFC044;">Read the story →</span>
+        </div>
+      </a>
+    </sc-if>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:20px;">
+      <sc-for list="{{ rest }}" as="p" hint-placeholder-count="6">
+        <a href="{{ p.href }}" onClick="{{ p.open }}" style="display:flex;flex-direction:column;border-radius:24px;overflow:hidden;background:#F4F4F2;color:#0A0A0A;transition:transform .8s cubic-bezier(.22,1,.36,1);animation:tz-in .9s cubic-bezier(.22,1,.36,1);" style-hover="transform:translateY(-6px);color:#0A0A0A;">
+          <div style="position:relative;aspect-ratio:16/10;background:#E6E6E3;"><img src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ p.pos }};"></div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:10px;flex:1;">
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#5E5E5A;">{{ p.catLabel }} · {{ p.date }}</span>
+            <h3 style="margin:0;font-family:'General Sans',sans-serif;font-weight:600;font-size:22px;line-height:1.15;letter-spacing:-.02em;">{{ p.title }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.5;color:#2A2A2A;flex:1;">{{ p.dek }}</p>
+            <span style="font-size:14px;font-weight:600;">Read →</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isPost }}" hint-placeholder-val="{{ false }}">
+  <article data-screen-label="Blog post" style="animation:tz-in .9s cubic-bezier(.22,1,.36,1);">
+    <header style="max-width:880px;margin:0 auto;padding:clamp(120px,14vw,170px) clamp(20px,5vw,40px) 32px;display:flex;flex-direction:column;gap:18px;">
+      <a href="{{ backHref }}" onClick="{{ back }}" style="font-size:14px;font-weight:500;color:#5E5E5A;">← All posts</a>
+      <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.16em;color:#5E5E5A;">{{ post.catLabel }} · {{ post.date }}</span>
+      <h1 style="margin:0;font-family:'General Sans',sans-serif;font-weight:600;font-size:clamp(36px,5vw,68px);line-height:1;letter-spacing:-.04em;text-wrap:balance;">{{ post.title }}</h1>
+      <p style="margin:0;font-size:20px;line-height:1.5;color:#2A2A2A;text-wrap:pretty;">{{ post.dek }}</p>
+    </header>
+    <figure style="margin:0 auto;max-width:1200px;padding:0 clamp(20px,5vw,40px);">
+      <div style="position:relative;aspect-ratio:16/8;border-radius:28px;overflow:hidden;background:#E6E6E3;"><img src="{{ post.img }}" alt="{{ post.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ post.pos }};"></div>
+    </figure>
+    <div style="max-width:720px;margin:0 auto;padding:48px clamp(20px,5vw,40px) 24px;display:flex;flex-direction:column;gap:22px;">
+      <sc-for list="{{ post.blocks }}" as="b" hint-placeholder-count="5">
+        <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ false }}">
+          <h2 style="margin:16px 0 0;font-family:'General Sans',sans-serif;font-weight:600;font-size:28px;letter-spacing:-.025em;">{{ b.text }}</h2>
+        </sc-if>
+        <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}">
+          <p style="margin:0;font-size:18px;line-height:1.7;color:#1F1F1F;text-wrap:pretty;">{{ b.text }}</p>
+        </sc-if>
+        <sc-if value="{{ b.isQ }}" hint-placeholder-val="{{ false }}">
+          <blockquote style="margin:8px 0;padding:4px 0 4px 22px;border-left:3px solid #FFC044;font-family:'General Sans',sans-serif;font-weight:500;font-size:24px;line-height:1.3;letter-spacing:-.02em;">{{ b.text }}</blockquote>
+        </sc-if>
+      </sc-for>
+      <sc-if value="{{ post.hasSource }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ post.source }}" target="_blank" rel="noopener" style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;border-radius:16px;background:#F4F4F2;font-size:15px;" style-hover="background:#EDEDEA;"><span>Read the original coverage at <strong style="font-weight:600;">{{ post.sourceName }}</strong></span><span style="font-weight:600;">↗</span></a>
+      </sc-if>
+    </div>
+    <section style="max-width:1280px;margin:0 auto;padding:48px clamp(20px,5vw,72px) clamp(72px,10vw,120px);display:flex;flex-direction:column;gap:20px;">
+      <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.18em;color:#5E5E5A;">KEEP READING</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;">
+        <sc-for list="{{ more }}" as="p" hint-placeholder-count="3">
+          <a href="{{ p.href }}" onClick="{{ p.open }}" style="display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:20px;background:#F4F4F2;color:#0A0A0A;" style-hover="background:#EDEDEA;color:#0A0A0A;">
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#5E5E5A;">{{ p.catLabel }} · {{ p.date }}</span>
+            <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:19px;line-height:1.2;letter-spacing:-.015em;">{{ p.title }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </article>
+</sc-if>
+
+<footer style="background:#0A0A0A;color:#8A8A86;padding:32px clamp(20px,5vw,72px);">
+  <div style="max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.12em;">
+    <span>© 2026 TREEPZ</span>
+    <a href="mailto:marketing@treepz.com" style="color:#D8D8D4;">MARKETING@TREEPZ.COM</a>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const POSTS = [
+  { slug: 'tmo-live-at-cms', cat: 'stories', date: '5 Aug 2026', title: 'Live at CMS T&M: how TMO took a motor park from paper to platform',
+    dek: 'On the CMS–Ajah corridor, the Treepz platform now runs ticketing, cashless fares and trip records for CMS T&M — delivered as TMO.',
+    img: 'assets/site/proof-andy.png', pos: '50% 15%', alt: 'Andy Akhigbe, MD/CEO of CMS T&M, speaking at the TMO launch',
+    blocks: [
+      ['p', 'CMS T&M runs one of the busiest corridors in Lagos, between CMS and Ajah. Until this year, most of the operation ran the way most parks in the city still run: cash at the gate, paper ledgers in the office, and a lot of trust in between.'],
+      ['p', 'TMO is the name of the deployment Treepz built for CMS T&M\u2019s parks and terminals. It puts ticketing, cashless payment and trip records on one system, so every departure, every fare and every driver\u2019s day leaves a record.'],
+      ['h', 'Launch day'],
+      ['p', 'The launch brought drivers, riders, park officials and the Treepz team together at the park. Andy Akhigbe, MD/CEO of CMS T&M, spoke to drivers and riders about what the change means for them: clearer earnings for drivers, no cash needed for riders, and a full picture of the operation for the business.'],
+      ['q', 'Every trip, every fare, every bus — in one place.'],
+      ['h', 'What changed'],
+      ['p', 'Riders now pay cashless. Drivers can see what they earned. And for the first time, CMS T&M can see trips, passengers and fares live, by bus and by route, instead of reconciling paper at the end of the day.'],
+      ['p', 'In the weeks after launch, the operation reported more daily riders, around 180 buses on the platform and thousands of rider cards issued — numbers the park could not have counted reliably before.'],
+      ['h', 'Why records matter'],
+      ['p', 'A recorded trip history is more than a report. It is the proof of real earnings and real demand that operators need when they talk to banks and financiers about growing their fleets. TMO gives CMS T&M that history, trip by trip.'],
+    ] },
+  { slug: 'brampton-canada-hq', cat: 'news', date: '1 Aug 2025', title: 'Treepz opens its North American headquarters in Canada',
+    dek: 'Treepz launched Canadian operations at Brampton City Hall, with a two-year partnership with the University of Toronto\u2013supported African Impact Initiative as its first client.',
+    img: 'assets/products/interstate.jpg', pos: '50% 50%', alt: 'A white intercity coach on an open highway at golden hour',
+    source: 'https://investbrampton.ca/treepz-launches-north-american-headquarters-in-brampton-expanding-its-footprint-into-the-canadian-market/', sourceName: 'Invest Brampton',
+    blocks: [
+      ['p', 'Treepz took its first step into North America in August 2025, launching Canadian operations at Brampton City Hall during National Black Business Month.'],
+      ['p', 'Mayor Patrick Brown welcomed the founders, board members and team, and described corporate mobility as part of the wider global logistics conversation.'],
+      ['h', 'A first client from day one'],
+      ['p', 'Treepz Canada began with a two-year partnership with the African Impact Initiative, supported by the University of Toronto. It is the company\u2019s first client relationship in the Canadian market.'],
+      ['p', 'Canada now anchors Treepz\u2019s North American corporate travel and mobility work, alongside its operations across West and East Africa.'],
+    ] },
+  { slug: '2023-in-review', cat: 'news', date: '24 Jan 2024', title: '2023 in review: 1.2 million passengers, six new cities and 668 vehicles',
+    dek: 'A year of growth across Africa, from new cities and vehicles on the platform to new products for travellers and hosts.',
+    img: 'assets/products/parks.jpg', pos: '50% 50%', alt: 'Commuters at the gates of a modern bus terminal',
+    source: 'https://corporate.treepz.com/press', sourceName: 'Treepz Press',
+    blocks: [
+      ['p', 'Treepz closed 2023 having moved 1.2 million passengers. Over the year it added six new cities and brought 668 vehicles onto the platform.'],
+      ['p', 'The year included a new marketplace model, an insurance programme for travellers and hosts, new board appointments and a partner programme for travel agencies, event hosts and hospitality companies.'],
+      ['p', 'It set the stage for the company\u2019s focus since: corporate mobility, staff transportation and group travel across the cities it serves.'],
+    ] },
+  { slug: 'treepz-care-octamile', cat: 'news', date: '17 Oct 2023', title: 'Treepz and Octamile launch Treepz Care for travellers and hosts',
+    dek: 'A partnership with insurtech Octamile brought insurance cover to trips booked on Treepz.',
+    img: 'assets/products/rideshare.jpg', pos: '50% 50%', alt: 'A white minibus pulling up for commuters at sunrise',
+    source: 'https://techlabari.com/tag/treepz/', sourceName: 'Tech Labari',
+    blocks: [
+      ['p', 'In October 2023, Treepz partnered with insurtech startup Octamile to launch Treepz Care, an insurance programme covering travellers and vehicle hosts on the platform.'],
+      ['p', 'The aim was simple: give people booking trips, and the hosts providing vehicles, more peace of mind on every journey.'],
+    ] },
+  { slug: 'board-appointments', cat: 'news', date: '16 Aug 2023', title: 'Treepz appoints a former Meta executive and ex-Bank of Industry MD to its board',
+    dek: 'New board members brought deep experience in technology and development finance.',
+    img: 'assets/products/staff.jpg', pos: '50% 50%', alt: 'Staff stepping off white buses at an office tower',
+    source: 'https://sosv.com/company/treepz/', sourceName: 'SOSV',
+    blocks: [
+      ['p', 'In August 2023, Treepz strengthened its board with new appointments, including a former senior executive at Meta and a former Managing Director of Nigeria\u2019s Bank of Industry.'],
+      ['p', 'The appointments added experience in scaling technology platforms and in financing businesses — both central to building mobility infrastructure across Africa.'],
+    ] },
+  { slug: 'kenya-expansion', cat: 'news', date: '14 Feb 2023', title: 'Treepz expands into Kenya after raising $1.2 million',
+    dek: 'Fresh funding from GIIG Africa Fund and others took Treepz further into East Africa.',
+    img: 'assets/products/campus.jpg', pos: '50% 50%', alt: 'A white shuttle on a campus loop road',
+    source: 'https://enrich.africa/news/nigerian-mobility-startup-treepz-secures-additional-12m-to-expand-further-into-east-africa-EeHaDv', sourceName: 'Enrich Africa',
+    blocks: [
+      ['p', 'Treepz announced its move into Kenya in February 2023, following $1.2 million raised over the previous twelve months.'],
+      ['p', 'Investors included GIIG Africa Fund, MoAngels, Roselake VC, Unpopular VC, Goodwater Capital and BKR Capital. The GIIG investment followed Treepz winning the GSA African Award in Cape Town.'],
+      ['p', 'Kenya joined Nigeria, Ghana and Uganda as Treepz built a presence across West and East Africa.'],
+    ] },
+  { slug: 'plentywaka-to-treepz', cat: 'stories', date: 'Since 2019', title: 'From Plentywaka to Treepz: the road so far',
+    dek: 'How a Lagos bus-booking startup became a corporate mobility company in six countries.',
+    img: 'assets/site/hero.jpg', pos: '50% 100%', alt: 'A white bus on a Lagos lagoon road at sunset',
+    source: 'https://techcabal.com/2023/05/04/treepz-pivot-to-car-sharing/', sourceName: 'TechCabal',
+    blocks: [
+      ['p', 'Treepz started in Lagos in 2019 as Plentywaka, a way to book seats on buses across the city. In September 2021 it became Treepz — pronounced \u201ctrips\u201d.'],
+      ['p', 'That year it raised a $2.8 million seed round and grew by acquiring mobility startups in Ghana and Uganda. Kenya followed in 2023.'],
+      ['h', 'Where we are now'],
+      ['p', 'Today Treepz has facilitated millions of customer journeys across 25 cities in 6 countries and 4 continents, with headquarters in Toronto, Canada. It serves employees, entrepreneurs and executives with staff transportation, corporate travel, group bookings and event mobility — and now builds the technology that runs parks, campuses and school runs.'],
+      ['p', 'The company is backed by investors including SOSV, Goodwater Capital, Techstars and GIIG Africa Fund.'],
+    ] },
+];
+const CAT = { stories: 'STORY', news: 'NEWSROOM' };
+
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const q = new URLSearchParams(location.search);
+    this.state = { cat: ['stories', 'news'].includes(q.get('cat')) ? q.get('cat') : 'all', post: POSTS.some((x) => x.slug === q.get('post')) ? q.get('post') : null };
+  }
+  componentDidMount() { this.onPop = () => { const q = new URLSearchParams(location.search); this.setState({ post: q.get('post'), cat: q.get('cat') || 'all' }); }; addEventListener('popstate', this.onPop); }
+  componentWillUnmount() { removeEventListener('popstate', this.onPop); }
+  go(params) {
+    const u = new URL(location.href); u.search = '';
+    Object.entries(params).forEach(([k, v]) => v && v !== 'all' && u.searchParams.set(k, v));
+    history.pushState(null, '', u); scrollTo(0, 0);
+  }
+  card(x) {
+    return { ...x, catLabel: CAT[x.cat], href: `?post=${x.slug}`, hasSource: !!x.source,
+      open: (e) => { e.preventDefault(); this.go({ post: x.slug }); this.setState({ post: x.slug }); },
+      blocks: x.blocks.map(([t, text]) => ({ text, isH: t === 'h', isP: t === 'p', isQ: t === 'q' })) };
+  }
+  renderVals() {
+    const s = this.state, list = POSTS.filter((x) => s.cat === 'all' || x.cat === s.cat).map((x) => this.card(x));
+    const post = s.post ? this.card(POSTS.find((x) => x.slug === s.post)) : null;
+    const copy = { all: ['BLOG & NEWSROOM', 'Stories and news from Treepz', 'From launch days at the park to milestones across six countries — what we\u2019re building, and who we\u2019re building it with.'],
+      stories: ['BLOG', 'Stories from the road', 'Inside the parks, campuses and corridors where Treepz technology runs every day.'],
+      news: ['NEWSROOM', 'Treepz in the news', 'Announcements, milestones and press coverage.'] }[s.cat];
+    return {
+      isList: !post, isPost: !!post, post: post || {}, eyebrow: copy[0], title: copy[1], intro: copy[2],
+      tabs: [['all', 'All'], ['stories', 'Blog'], ['news', 'Newsroom']].map(([k, label]) => ({ label, pick: () => { this.go({ cat: k }); this.setState({ cat: k }); },
+        ...(s.cat === k ? { bg: '#0A0A0A', fg: '#fff', border: '#0A0A0A' } : { bg: 'transparent', fg: '#0A0A0A', border: 'rgba(10,10,10,.15)' }) })),
+      hasFeatured: list.length > 0, featured: list[0] || {}, rest: list.slice(1),
+      more: post ? POSTS.filter((x) => x.slug !== post.slug).slice(0, 3).map((x) => this.card(x)) : [],
+      backHref: '?', back: (e) => { e.preventDefault(); this.go({ cat: s.cat }); this.setState({ post: null }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

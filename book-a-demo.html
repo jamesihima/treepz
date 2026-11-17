@@ -27,15 +27,7 @@ input::placeholder,textarea::placeholder{color:#6E6E6A;}
 
 <div style="min-height:100vh;background:#0A0A0A;">
 
-<header style="position:fixed;top:16px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none;">
-  <nav style="pointer-events:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 8px 8px 22px;border-radius:999px;background:rgba(18,18,18,.42);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);max-width:1100px;width:100%;">
-    <a href="index.html" style="display:flex;align-items:center;"><img src="assets/site/logo-white.png" alt="Treepz" style="height:22px;display:block;"></a>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <a href="index.html#products" style="font-size:14px;font-weight:500;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.14);">All products</a>
-      <a href="mailto:marketing@treepz.com" style="font-size:14px;font-weight:600;padding:10px 18px;border-radius:999px;background:#FFC044;color:#0A0A0A;" style-hover="background:#ffcf6b;color:#0A0A0A;">Talk to sales</a>
-    </div>
-  </nav>
-</header>
+<dc-import name="Treepz Nav" theme="dark" hint-size="100%,0px"></dc-import>
 
 <section data-screen-label="Demo hero" style="position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end;">
   <sc-for list="{{ heroImgs }}" as="h" hint-placeholder-count="1">
@@ -250,37 +242,37 @@ input::placeholder,textarea::placeholder{color:#6E6E6A;}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const P = {
-  parks: { n: '01', group: 'PARKS', name: 'Treepz Parks and Terminals', img: 'assets/products/parks.jpg', alt: 'Commuters tapping cards at gates in a modern Lagos bus terminal at golden hour',
+  parks: { n: '01', group: 'PARKS', name: 'Parks and Terminals', img: 'assets/products/parks.jpg', alt: 'Commuters tapping cards at gates in a modern Lagos bus terminal at golden hour',
     pitch: 'Ticketing, cashless payment and trip records for your whole park or terminal — from the gate to the back office.',
     points: ['Ticket kiosks and tap-card gates', 'Every departure recorded by bay', 'Live earnings per bus and per route'],
     fields: [['org', 'Park or terminal name', 'text', 'e.g. CMS Terminal', 1], ['loc', 'Location', 'text', 'e.g. Lagos Island'], ['buses', 'Buses operating', 'number', 'e.g. 120'], ['daily', 'Daily departures', 'number', 'e.g. 400']],
     notesPh: 'e.g. We run 3 terminals and want to start with one', demoTitle: 'See a day at your park, run on Treepz.',
     steps: [['Gate to bus', 'How riders buy tickets and tap on, and how each departure gets logged by bay.'], ['Park dashboard', 'Trips, passengers and cashless fares, live, by bus and route.'], ['Your rollout', 'Hardware, staff training and a go-live plan sized to your park.']] },
-  campus: { n: '02', group: 'CAMPUSES', name: 'Treepz Campus Commute', img: 'assets/products/campus.jpg', alt: 'A white campus shuttle on a university loop road with students walking',
+  campus: { n: '02', group: 'CAMPUSES', name: 'Campus Commute', img: 'assets/products/campus.jpg', alt: 'A white campus shuttle on a university loop road with students walking',
     pitch: 'Shuttles timed around lectures, with cashless fares and no cash at the stop.',
     points: ['Timetables built around lectures', 'Cashless fares by app, wallet or transfer', 'Ridership by stop and hour'],
     fields: [['org', 'Institution', 'text', 'e.g. University of Lagos', 1], ['students', 'Students', 'number', 'e.g. 40000'], ['buses', 'Shuttles', 'number', 'e.g. 25'], ['routes', 'Campus routes', 'number', 'e.g. 6']],
     notesPh: 'e.g. Peak times are 7–9am and 4–6pm', demoTitle: 'See your campus loop, timed to the lecture bell.',
     steps: [['Booking and payment', 'How students and staff book a seat and pay by app, wallet or transfer — no cash at the stop.'], ['Schedules', 'Shuttle timetables that follow lecture blocks and exam periods.'], ['Insight', 'Ridership by stop and hour, so you add buses where the queues are.']] },
-  school: { n: '03', group: 'SCHOOLS', name: 'Treepz School Run', img: 'assets/products/school.jpg', alt: 'Pupils boarding a yellow and white school bus at a school gate in the morning',
+  school: { n: '03', group: 'SCHOOLS', name: 'School Run', img: 'assets/products/school.jpg', alt: 'Pupils boarding a yellow and white school bus at a school gate in the morning',
     pitch: 'Scheduled school buses, with trip records the school and parents can see.',
     points: ['Planned routes and pick-up times', 'Every trip recorded for the school', 'Parents see when the bus leaves'],
     fields: [['org', 'School name', 'text', 'e.g. Grange School', 1], ['pupils', 'Pupils who ride', 'number', 'e.g. 350'], ['buses', 'School buses', 'number', 'e.g. 8'], ['areas', 'Pick-up areas', 'text', 'e.g. Ikoyi, Lekki']],
     notesPh: 'e.g. We use a third-party bus vendor today', demoTitle: 'See the school run from first pick-up to the school gate.',
     steps: [['Routes', 'How pick-up routes and times are planned and shared.'], ['Trip records', 'Every run recorded — who rode, when it left, when it arrived.'], ['Parents and school', 'What parents and the school office can see, and when.']] },
-  staff: { n: '04', group: 'COMPANIES', name: 'Treepz Staff Bus Solution', img: 'assets/products/staff.jpg', alt: 'Staff stepping off white buses at a glass office tower in Lagos',
+  staff: { n: '04', group: 'COMPANIES', name: 'Staff Bus Solution', img: 'assets/products/staff.jpg', alt: 'Staff stepping off white buses at a glass office tower in Lagos',
     pitch: 'Scheduled staff buses, with a clear record of every trip and its cost.',
     points: ['Scheduled routes for every shift', 'Staff check in on board', 'Cost per trip and per rider'],
     fields: [['org', 'Company', 'text', 'e.g. Acme Nigeria Ltd', 1], ['staff', 'Staff who ride', 'number', 'e.g. 600'], ['buses', 'Buses', 'number', 'e.g. 12'], ['sites', 'Office locations', 'text', 'e.g. VI, Ikeja']],
     notesPh: 'e.g. We run two shifts and outsource buses today', demoTitle: 'See your staff commute, costed trip by trip.',
     steps: [['Routes and shifts', 'How routes are set for each shift and office.'], ['On board', 'How staff check in, and how no-shows and headcounts are tracked.'], ['Cost reports', 'Cost per trip and per rider, ready for HR and finance.']] },
-  rideshare: { n: '05', group: 'RIDERS', name: 'Treepz Ride Share', img: 'assets/products/rideshare.jpg', alt: 'Commuters waiting as a white minibus pulls up on a Lagos expressway at sunrise',
+  rideshare: { n: '05', group: 'RIDERS', name: 'Ride Share', img: 'assets/products/rideshare.jpg', alt: 'Commuters waiting as a white minibus pulls up on a Lagos expressway at sunrise',
     pitch: 'Scheduled daily commutes for riders, paid cashless, with points toward free rides.',
     points: ['Riders book their seat ahead', 'Cashless fares, every one recorded', 'Loyalty points that bring riders back'],
     fields: [['org', 'Company or fleet name', 'text', 'e.g. Lekki Shuttles', 1], ['buses', 'Vehicles', 'number', 'e.g. 30'], ['routes', 'Routes', 'number', 'e.g. 5'], ['riders', 'Daily riders', 'number', 'e.g. 900']],
     notesPh: 'e.g. Mostly Lekki to VI in the morning', demoTitle: 'See how riders book, pay and come back.',
     steps: [['Booking', 'How riders schedule their commute and hold a seat.'], ['Payment', 'Card, wallet and transfer — and the record every fare leaves.'], ['Loyalty', 'How points and free rides keep riders on your routes.']] },
-  interstate: { n: '06', group: 'CITIES', name: 'Treepz Interstate Travel', img: 'assets/products/interstate.jpg', alt: 'A white intercity coach on an open Nigerian highway at golden hour',
+  interstate: { n: '06', group: 'CITIES', name: 'Interstate Travel', img: 'assets/products/interstate.jpg', alt: 'A white intercity coach on an open Nigerian highway at golden hour',
     pitch: 'Seats booked between cities ahead of time, paid cashless, with every booking on record.',
     points: ['Advance seat booking', 'Cashless fares at booking', 'Manifest and records for every trip'],
     fields: [['org', 'Operator name', 'text', 'e.g. Southwest Coaches', 1], ['buses', 'Coaches', 'number', 'e.g. 40'], ['cities', 'Cities served', 'text', 'e.g. Lagos, Abuja, Benin'], ['weekly', 'Weekly departures', 'number', 'e.g. 120']],
