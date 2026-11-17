@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Book a demo | Treepz</title>
+<meta name="description" content="Book a 30-minute Treepz demo for your park, campus, school, company, ride share or interstate operation.">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+html,body{margin:0;padding:0;background:#0A0A0A;}
+body{font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:#FFC044;}
+*{box-sizing:border-box;}
+::selection{background:#FFC044;color:#0A0A0A;}
+input::placeholder,textarea::placeholder{color:#6E6E6A;}
+@keyframes tz-in{from{opacity:0;transform:translateY(24px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes tz-zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#0A0A0A;">
+
+<header style="position:fixed;top:16px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 16px;pointer-events:none;">
+  <nav style="pointer-events:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 8px 8px 22px;border-radius:999px;background:rgba(18,18,18,.42);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);max-width:1100px;width:100%;">
+    <a href="index.html" style="display:flex;align-items:center;"><img src="assets/site/logo-white.png" alt="Treepz" style="height:22px;display:block;"></a>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <a href="index.html#products" style="font-size:14px;font-weight:500;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.14);">All products</a>
+      <a href="mailto:marketing@treepz.com" style="font-size:14px;font-weight:600;padding:10px 18px;border-radius:999px;background:#FFC044;color:#0A0A0A;" style-hover="background:#ffcf6b;color:#0A0A0A;">Talk to sales</a>
+    </div>
+  </nav>
+</header>
+
+<section data-screen-label="Demo hero" style="position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end;">
+  <sc-for list="{{ heroImgs }}" as="h" hint-placeholder-count="1">
+    <img src="{{ h.src }}" alt="{{ h.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;opacity:{{ h.op }};transition:opacity 1.1s cubic-bezier(.22,1,.36,1);animation:tz-zoom 2.4s cubic-bezier(.22,1,.36,1);">
+  </sc-for>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.6) 45%,rgba(10,10,10,.35) 100%);"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.5) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0) 60%,#0A0A0A 100%);"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(191,217,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(191,217,255,.05) 1px,transparent 1px);background-size:96px 96px;mask-image:linear-gradient(90deg,#000 0%,transparent 60%);-webkit-mask-image:linear-gradient(90deg,#000 0%,transparent 60%);"></div>
+
+  <div style="position:relative;width:100%;max-width:1280px;margin:0 auto;padding:128px clamp(20px,5vw,72px) 72px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:clamp(32px,5vw,72px);align-items:end;">
+
+    <div style="display:flex;flex-direction:column;gap:28px;">
+      <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);align-self:flex-start;">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
+          <button onClick="{{ t.pick }}" style="border:0;cursor:pointer;font:inherit;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;padding:10px 12px;border-radius:12px;background:{{ t.bg }};color:{{ t.fg }};transition:background .6s cubic-bezier(.22,1,.36,1),color .6s;">{{ t.group }}</button>
+        </sc-for>
+      </div>
+      <div key="{{ p.slug }}" style="display:flex;flex-direction:column;gap:22px;animation:tz-in 1s cubic-bezier(.22,1,.36,1);">
+        <span style="font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.18em;color:#FFC044;">{{ p.n }} · BOOK A DEMO · {{ p.group }}</span>
+        <h1 style="margin:0;font-family:'General Sans',sans-serif;font-weight:600;font-size:clamp(44px,6vw,92px);line-height:.96;letter-spacing:-.045em;text-wrap:balance;">{{ p.name }}</h1>
+        <p style="margin:0;max-width:540px;font-size:clamp(17px,1.4vw,19px);line-height:1.55;color:rgba(255,255,255,.88);text-wrap:pretty;">{{ p.pitch }}</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px;">
+          <sc-for list="{{ p.points }}" as="pt" hint-placeholder-count="3">
+            <div style="display:flex;align-items:center;gap:12px;font-size:15px;"><span style="width:20px;height:20px;border-radius:50%;background:#FFC044;color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">✓</span>{{ pt }}</div>
+          </sc-for>
+        </div>
+        <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;">30 MIN · VIDEO OR ON SITE IN LAGOS · NO COMMITMENT</span>
+      </div>
+    </div>
+
+    <div style="position:relative;border-radius:28px;padding:clamp(22px,2.6vw,32px);background:rgba(14,14,14,.62);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(24px) saturate(140%);-webkit-backdrop-filter:blur(24px) saturate(140%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 40px 80px rgba(0,0,0,.45);">
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:18px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:22px;letter-spacing:-.02em;">Book your demo</span>
+            <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#BFD9FF;">STEP {{ stepNo }} / 2</span>
+          </div>
+          <div style="height:2px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden;"><div style="height:100%;width:{{ stepPct }};background:#FFC044;box-shadow:0 0 12px #FFC044;transition:width .9s cubic-bezier(.22,1,.36,1);"></div></div>
+
+          <sc-if value="{{ step1 }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;">ABOUT YOUR OPERATION</span>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+                <sc-for list="{{ opFields }}" as="f" hint-placeholder-count="4">
+                  <label style="display:flex;flex-direction:column;gap:6px;grid-column:{{ f.span }};">
+                    <span style="font-size:13px;color:#D8D8D4;">{{ f.label }}</span>
+                    <input name="{{ f.key }}" type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" required="{{ f.req }}" style="height:48px;padding:0 14px;border-radius:12px;border:1px solid {{ f.border }};background:rgba(0,0,0,.35);color:#fff;font:inherit;font-size:15px;outline:none;transition:border-color .6s;" style-focus="border-color:#FFC044;">
+                  </label>
+                </sc-for>
+              </div>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;margin-top:6px;">YOUR DETAILS</span>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;">
+                <sc-for list="{{ youFields }}" as="f" hint-placeholder-count="4">
+                  <label style="display:flex;flex-direction:column;gap:6px;grid-column:{{ f.span }};">
+                    <span style="font-size:13px;color:#D8D8D4;">{{ f.label }}</span>
+                    <input name="{{ f.key }}" type="{{ f.type }}" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" required="{{ f.req }}" style="height:48px;padding:0 14px;border-radius:12px;border:1px solid {{ f.border }};background:rgba(0,0,0,.35);color:#fff;font:inherit;font-size:15px;outline:none;transition:border-color .6s;" style-focus="border-color:#FFC044;">
+                  </label>
+                </sc-for>
+              </div>
+              <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:13px;color:#FFC044;">{{ err }}</span>
+              </sc-if>
+              <button type="button" onClick="{{ next }}" style="height:54px;border:0;border-radius:999px;background:#FFC044;color:#0A0A0A;font:inherit;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 0 30px rgba(255,192,68,.35);margin-top:6px;" style-hover="background:#ffcf6b;">Choose a time →</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ step2 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;">PICK A DAY</span>
+              <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;">
+                <sc-for list="{{ days }}" as="d" hint-placeholder-count="5">
+                  <button type="button" onClick="{{ d.pick }}" style="cursor:pointer;font:inherit;display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;border-radius:14px;border:1px solid {{ d.border }};background:{{ d.bg }};color:{{ d.fg }};transition:all .6s cubic-bezier(.22,1,.36,1);">
+                    <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.14em;">{{ d.dow }}</span>
+                    <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:22px;">{{ d.date }}</span>
+                    <span style="font-size:11px;">{{ d.mon }}</span>
+                  </button>
+                </sc-for>
+              </div>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;margin-top:4px;">PICK A TIME (WAT)</span>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;">
+                <sc-for list="{{ times }}" as="tm" hint-placeholder-count="6">
+                  <button type="button" onClick="{{ tm.pick }}" style="cursor:pointer;font:inherit;height:44px;border-radius:12px;border:1px solid {{ tm.border }};background:{{ tm.bg }};color:{{ tm.fg }};font-size:14px;font-weight:500;transition:all .6s cubic-bezier(.22,1,.36,1);">{{ tm.label }}</button>
+                </sc-for>
+              </div>
+              <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A8A86;margin-top:4px;">HOW WOULD YOU LIKE TO MEET</span>
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+                <sc-for list="{{ modes }}" as="md" hint-placeholder-count="2">
+                  <button type="button" onClick="{{ md.pick }}" style="cursor:pointer;font:inherit;height:44px;border-radius:12px;border:1px solid {{ md.border }};background:{{ md.bg }};color:{{ md.fg }};font-size:14px;font-weight:500;transition:all .6s cubic-bezier(.22,1,.36,1);">{{ md.label }}</button>
+                </sc-for>
+              </div>
+              <label style="display:flex;flex-direction:column;gap:6px;">
+                <span style="font-size:13px;color:#D8D8D4;">Anything we should know? (optional)</span>
+                <textarea value="{{ notes }}" onChange="{{ setNotes }}" rows="3" placeholder="{{ p.notesPh }}" style="padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);color:#fff;font:inherit;font-size:15px;outline:none;resize:vertical;" style-focus="border-color:#FFC044;"></textarea>
+              </label>
+              <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:13px;color:#FFC044;">{{ err }}</span>
+              </sc-if>
+              <div style="display:flex;gap:10px;margin-top:6px;">
+                <button type="button" onClick="{{ back }}" style="height:54px;padding:0 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:none;color:#fff;font:inherit;font-weight:500;cursor:pointer;">← Back</button>
+                <button type="submit" style="flex:1;height:54px;border:0;border-radius:999px;background:#FFC044;color:#0A0A0A;font:inherit;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 0 30px rgba(255,192,68,.35);" style-hover="background:#ffcf6b;">Confirm demo</button>
+              </div>
+            </div>
+          </sc-if>
+        </form>
+      </sc-if>
+
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:18px;animation:tz-in 1s cubic-bezier(.22,1,.36,1);">
+          <span style="width:56px;height:56px;border-radius:50%;background:#FFC044;color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;box-shadow:0 0 40px rgba(255,192,68,.5);">✓</span>
+          <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:30px;letter-spacing:-.03em;line-height:1.05;">Request received.</span>
+          <p style="margin:0;font-size:15px;line-height:1.55;color:#B8B8B4;">We'll confirm your {{ p.name }} demo by email within one working day.</p>
+          <div style="display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.08);">
+            <sc-for list="{{ summary }}" as="s" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;"><span style="color:#8A8A86;">{{ s.k }}</span><span style="text-align:right;">{{ s.v }}</span></div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="{{ mailto }}" style="padding:14px 22px;border-radius:999px;background:#FFC044;color:#0A0A0A;font-weight:600;font-size:15px;" style-hover="background:#ffcf6b;color:#0A0A0A;">Email the details too</a>
+            <button onClick="{{ reset }}" style="padding:14px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:none;color:#fff;font:inherit;font-weight:500;cursor:pointer;">Book another</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="What the demo covers" style="position:relative;background:#0A0A0A;padding:clamp(72px,10vw,140px) clamp(20px,5vw,72px);">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:40px;">
+    <div style="display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;">
+      <span style="font-size:12px;letter-spacing:.18em;color:#FFC044;">IN 30 MINUTES</span>
+      <span style="flex:1;height:1px;background:#2A2A2A;display:block;"></span>
+    </div>
+    <h2 key="{{ p.slug }}" style="margin:0;max-width:900px;font-family:'General Sans',sans-serif;font-weight:600;font-size:clamp(36px,4.6vw,68px);line-height:1;letter-spacing:-.04em;animation:tz-in 1s cubic-bezier(.22,1,.36,1);">{{ p.demoTitle }}</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;">
+      <sc-for list="{{ p.steps }}" as="st" hint-placeholder-count="3">
+        <article style="border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:border-color .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);" style-hover="border-color:rgba(255,192,68,.6);transform:translateY(-6px);">
+          <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.16em;color:#BFD9FF;">{{ st.n }}</span>
+          <h3 style="margin:0;font-family:'General Sans',sans-serif;font-weight:600;font-size:24px;letter-spacing:-.02em;">{{ st.t }}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.55;color:#B8B8B4;">{{ st.d }}</p>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Other products" style="background:#0A0A0A;padding:0 clamp(20px,5vw,72px) clamp(72px,10vw,140px);">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;align-items:center;gap:14px;font-family:'Geist Mono',monospace;">
+      <span style="font-size:12px;letter-spacing:.18em;color:#8A8A86;">OTHER PRODUCTS</span>
+      <span style="flex:1;height:1px;background:#2A2A2A;display:block;"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px;">
+      <sc-for list="{{ others }}" as="o" hint-placeholder-count="5">
+        <button onClick="{{ o.pick }}" style="cursor:pointer;font:inherit;text-align:left;position:relative;height:180px;border-radius:20px;overflow:hidden;border:1px solid #1E1E1E;padding:0;color:#fff;background:#111;" style-hover="border-color:rgba(255,192,68,.6);">
+          <img src="{{ o.img }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;">
+          <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,0) 30%,rgba(10,10,10,.9) 100%);"></span>
+          <span style="position:absolute;left:16px;right:16px;bottom:14px;display:flex;flex-direction:column;gap:4px;">
+            <span style="font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.16em;color:#FFC044;">{{ o.group }}</span>
+            <span style="font-family:'General Sans',sans-serif;font-weight:600;font-size:18px;letter-spacing:-.01em;">{{ o.name }}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#0A0A0A;border-top:1px solid #1A1A1A;padding:32px clamp(20px,5vw,72px);">
+  <div style="max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.12em;color:#8A8A86;">
+    <span>© 2026 TREEPZ</span>
+    <a href="mailto:marketing@treepz.com" style="color:#D8D8D4;">MARKETING@TREEPZ.COM</a>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const P = {
+  parks: { n: '01', group: 'PARKS', name: 'Treepz Parks and Terminals', img: 'assets/products/parks.jpg', alt: 'Commuters tapping cards at gates in a modern Lagos bus terminal at golden hour',
+    pitch: 'Ticketing, cashless payment and trip records for your whole park or terminal — from the gate to the back office.',
+    points: ['Ticket kiosks and tap-card gates', 'Every departure recorded by bay', 'Live earnings per bus and per route'],
+    fields: [['org', 'Park or terminal name', 'text', 'e.g. CMS Terminal', 1], ['loc', 'Location', 'text', 'e.g. Lagos Island'], ['buses', 'Buses operating', 'number', 'e.g. 120'], ['daily', 'Daily departures', 'number', 'e.g. 400']],
+    notesPh: 'e.g. We run 3 terminals and want to start with one', demoTitle: 'See a day at your park, run on Treepz.',
+    steps: [['Gate to bus', 'How riders buy tickets and tap on, and how each departure gets logged by bay.'], ['Park dashboard', 'Trips, passengers and cashless fares, live, by bus and route.'], ['Your rollout', 'Hardware, staff training and a go-live plan sized to your park.']] },
+  campus: { n: '02', group: 'CAMPUSES', name: 'Treepz Campus Commute', img: 'assets/products/campus.jpg', alt: 'A white campus shuttle on a university loop road with students walking',
+    pitch: 'Shuttles timed around lectures, with cashless fares and no cash at the stop.',
+    points: ['Timetables built around lectures', 'Cashless fares by app, wallet or transfer', 'Ridership by stop and hour'],
+    fields: [['org', 'Institution', 'text', 'e.g. University of Lagos', 1], ['students', 'Students', 'number', 'e.g. 40000'], ['buses', 'Shuttles', 'number', 'e.g. 25'], ['routes', 'Campus routes', 'number', 'e.g. 6']],
+    notesPh: 'e.g. Peak times are 7–9am and 4–6pm', demoTitle: 'See your campus loop, timed to the lecture bell.',
+    steps: [['Booking and payment', 'How students and staff book a seat and pay by app, wallet or transfer — no cash at the stop.'], ['Schedules', 'Shuttle timetables that follow lecture blocks and exam periods.'], ['Insight', 'Ridership by stop and hour, so you add buses where the queues are.']] },
+  school: { n: '03', group: 'SCHOOLS', name: 'Treepz School Run', img: 'assets/products/school.jpg', alt: 'Pupils boarding a yellow and white school bus at a school gate in the morning',
+    pitch: 'Scheduled school buses, with trip records the school and parents can see.',
+    points: ['Planned routes and pick-up times', 'Every trip recorded for the school', 'Parents see when the bus leaves'],
+    fields: [['org', 'School name', 'text', 'e.g. Grange School', 1], ['pupils', 'Pupils who ride', 'number', 'e.g. 350'], ['buses', 'School buses', 'number', 'e.g. 8'], ['areas', 'Pick-up areas', 'text', 'e.g. Ikoyi, Lekki']],
+    notesPh: 'e.g. We use a third-party bus vendor today', demoTitle: 'See the school run from first pick-up to the school gate.',
+    steps: [['Routes', 'How pick-up routes and times are planned and shared.'], ['Trip records', 'Every run recorded — who rode, when it left, when it arrived.'], ['Parents and school', 'What parents and the school office can see, and when.']] },
+  staff: { n: '04', group: 'COMPANIES', name: 'Treepz Staff Bus Solution', img: 'assets/products/staff.jpg', alt: 'Staff stepping off white buses at a glass office tower in Lagos',
+    pitch: 'Scheduled staff buses, with a clear record of every trip and its cost.',
+    points: ['Scheduled routes for every shift', 'Staff check in on board', 'Cost per trip and per rider'],
+    fields: [['org', 'Company', 'text', 'e.g. Acme Nigeria Ltd', 1], ['staff', 'Staff who ride', 'number', 'e.g. 600'], ['buses', 'Buses', 'number', 'e.g. 12'], ['sites', 'Office locations', 'text', 'e.g. VI, Ikeja']],
+    notesPh: 'e.g. We run two shifts and outsource buses today', demoTitle: 'See your staff commute, costed trip by trip.',
+    steps: [['Routes and shifts', 'How routes are set for each shift and office.'], ['On board', 'How staff check in, and how no-shows and headcounts are tracked.'], ['Cost reports', 'Cost per trip and per rider, ready for HR and finance.']] },
+  rideshare: { n: '05', group: 'RIDERS', name: 'Treepz Ride Share', img: 'assets/products/rideshare.jpg', alt: 'Commuters waiting as a white minibus pulls up on a Lagos expressway at sunrise',
+    pitch: 'Scheduled daily commutes for riders, paid cashless, with points toward free rides.',
+    points: ['Riders book their seat ahead', 'Cashless fares, every one recorded', 'Loyalty points that bring riders back'],
+    fields: [['org', 'Company or fleet name', 'text', 'e.g. Lekki Shuttles', 1], ['buses', 'Vehicles', 'number', 'e.g. 30'], ['routes', 'Routes', 'number', 'e.g. 5'], ['riders', 'Daily riders', 'number', 'e.g. 900']],
+    notesPh: 'e.g. Mostly Lekki to VI in the morning', demoTitle: 'See how riders book, pay and come back.',
+    steps: [['Booking', 'How riders schedule their commute and hold a seat.'], ['Payment', 'Card, wallet and transfer — and the record every fare leaves.'], ['Loyalty', 'How points and free rides keep riders on your routes.']] },
+  interstate: { n: '06', group: 'CITIES', name: 'Treepz Interstate Travel', img: 'assets/products/interstate.jpg', alt: 'A white intercity coach on an open Nigerian highway at golden hour',
+    pitch: 'Seats booked between cities ahead of time, paid cashless, with every booking on record.',
+    points: ['Advance seat booking', 'Cashless fares at booking', 'Manifest and records for every trip'],
+    fields: [['org', 'Operator name', 'text', 'e.g. Southwest Coaches', 1], ['buses', 'Coaches', 'number', 'e.g. 40'], ['cities', 'Cities served', 'text', 'e.g. Lagos, Abuja, Benin'], ['weekly', 'Weekly departures', 'number', 'e.g. 120']],
+    notesPh: 'e.g. We sell most seats at the terminal today', demoTitle: 'See a full interstate trip, from booking to arrival.',
+    steps: [['Booking', 'How passengers find a departure and book a seat ahead.'], ['Manifest', 'The passenger list and seat map for every coach, before it leaves.'], ['Records', 'Every booking and fare recorded, by route and departure.']] },
+};
+const ORDER = ['parks', 'campus', 'school', 'staff', 'rideshare', 'interstate'];
+const YOU = [['name', 'Full name', 'text', 'e.g. Adaeze Okafor', 1], ['role', 'Your role', 'text', 'e.g. Operations lead'], ['phone', 'Phone', 'tel', '+234'], ['email', 'Work email', 'email', 'you@company.com', 1]];
+const TIMES = ['09:00', '10:30', '12:00', '13:30', '15:00', '16:30'];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const q = new URLSearchParams(location.search).get('product') || (location.hash || '').slice(1);
+    this.state = { slug: P[q] ? q : 'school', step: 1, vals: {}, day: null, time: null, mode: 'Video call', notes: '', sent: false, err: '' };
+  }
+  pick(slug) {
+    if (slug === this.state.slug) return;
+    const u = new URL(location.href); u.searchParams.set('product', slug); u.hash = '';
+    history.replaceState(null, '', u);
+    this.setState({ slug, step: 1, err: '', sent: false, vals: Object.fromEntries(Object.entries(this.state.vals).filter(([k]) => YOU.some((y) => y[0] === k))) });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  days() {
+    const out = [], d = new Date(); d.setDate(d.getDate() + 1);
+    while (out.length < 5) { if (d.getDay() % 6) out.push(new Date(d)); d.setDate(d.getDate() + 1); }
+    return out;
+  }
+  fieldList(defs) {
+    return defs.map(([key, label, type, ph, full]) => {
+      const v = this.state.vals[key] || '';
+      const req = ['org', 'name', 'email'].includes(key);
+      return { key, label, type, ph, req, value: v, span: full ? '1 / -1' : 'auto',
+        border: this.state.err && req && !v ? '#FFC044' : 'rgba(255,255,255,.12)',
+        onChange: (e) => { const val = e.target.value; this.setState((s) => ({ vals: { ...s.vals, [key]: val }, err: '' })); } };
+    });
+  }
+  chip(on) { return on ? { bg: '#FFC044', fg: '#0A0A0A', border: '#FFC044' } : { bg: 'rgba(0,0,0,.35)', fg: '#fff', border: 'rgba(255,255,255,.12)' }; }
+
+  renderVals() {
+    const s = this.state, p = P[s.slug];
+    const fmt = (d) => d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    const days = this.days();
+    const v = s.vals;
+    const summary = [
+      { k: 'Product', v: p.name }, { k: p.fields[0][1], v: v.org || '—' },
+      { k: 'When', v: s.day != null ? `${fmt(days[s.day])}, ${s.time} WAT` : '—' }, { k: 'How', v: s.mode }, { k: 'Confirmation to', v: v.email || '—' },
+    ];
+    const body = [`Product: ${p.name}`, ...p.fields.map((f) => `${f[1]}: ${v[f[0]] || '-'}`), ...YOU.map((f) => `${f[1]}: ${v[f[0]] || '-'}`), `When: ${summary[2].v}`, `How: ${s.mode}`, `Notes: ${s.notes || '-'}`].join('\n');
+    return {
+      p: { ...p, slug: s.slug, points: p.points, steps: p.steps.map((x, i) => ({ n: String(i + 1).padStart(2, '0'), t: x[0], d: x[1] })) },
+      heroImgs: ORDER.map((k) => ({ src: P[k].img, alt: k === s.slug ? P[k].alt : '', op: k === s.slug ? 1 : 0 })),
+      tabs: ORDER.map((k) => ({ group: P[k].group, pick: () => this.pick(k), ...(k === s.slug ? { bg: '#FFC044', fg: '#0A0A0A' } : { bg: 'transparent', fg: '#D8D8D4' }) })),
+      others: ORDER.filter((k) => k !== s.slug).map((k) => ({ group: P[k].group, name: P[k].name, img: P[k].img, pick: () => this.pick(k) })),
+      opFields: this.fieldList(p.fields), youFields: this.fieldList(YOU),
+      step1: s.step === 1, step2: s.step === 2, stepNo: s.step, stepPct: s.step === 1 ? '50%' : '100%',
+      notSent: !s.sent, sent: s.sent, err: s.err,
+      days: days.map((d, i) => ({ dow: d.toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase(), date: d.getDate(), mon: d.toLocaleDateString('en-GB', { month: 'short' }), pick: () => this.setState({ day: i, err: '' }), ...this.chip(s.day === i) })),
+      times: TIMES.map((t) => ({ label: t, pick: () => this.setState({ time: t, err: '' }), ...this.chip(s.time === t) })),
+      modes: ['Video call', 'On site in Lagos'].map((m) => ({ label: m, pick: () => this.setState({ mode: m }), ...this.chip(s.mode === m) })),
+      notes: s.notes, setNotes: (e) => this.setState({ notes: e.target.value }),
+      next: () => {
+        if (!v.org || !v.name || !v.email) return this.setState({ err: `Please add ${!v.org ? p.fields[0][1].toLowerCase() : !v.name ? 'your name' : 'your work email'}.` });
+        if (!/^\S+@\S+\.\S+$/.test(v.email)) return this.setState({ err: 'That email doesn’t look right.' });
+        this.setState({ step: 2, err: '' });
+      },
+      back: () => this.setState({ step: 1, err: '' }),
+      submit: (e) => { e.preventDefault(); if (s.day == null || !s.time) return this.setState({ err: 'Pick a day and a time.' }); this.setState({ sent: true, err: '' }); },
+      reset: () => this.setState({ sent: false, step: 1, day: null, time: null, notes: '' }),
+      summary,
+      mailto: `mailto:marketing@treepz.com?subject=${encodeURIComponent('Demo request: ' + p.name)}&body=${encodeURIComponent(body)}`,
+    };
+  }
+}
+</script>
+</body>
+</html>
